@@ -70,7 +70,7 @@
 
     .carousel {
       position: relative;
-      width: calc(100% - clamp(48px, 9vw, 128px) * 2);
+      width: calc(100% - 256px);
       aspect-ratio: 3 / 4;
       max-height: 80vh;
       max-width: calc(80vh * 3 / 4);
@@ -168,11 +168,11 @@
     }
 
     .hero-links a {
-      color: rgba(46, 47, 0, 0.6);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: #aaac72;
       font-size: 1rem;
+    }
+
+    .hero-links a::after {
+      display: none;
     }
 
 
@@ -217,17 +217,45 @@
     /* ---- Inline links ---- */
     a {
       color: rgba(46, 47, 0, 0.6);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: #aaac72;
+      text-decoration: none;
+      position: relative;
       transition: color 0.2s ease;
+    }
+
+    a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(46, 47, 0, 0.6);
+      border-radius: 9999px;
+      transition: background 0.2s ease;
     }
 
     a:hover {
       color: rgba(46, 47, 0, 1);
     }
 
+    a:hover::after {
+      background: rgba(46, 47, 0, 1);
+    }
 
+
+
+    /* ---- Carousel padding steps ---- */
+    @media (max-width: 1300px) and (min-width: 769px) {
+      .carousel {
+        width: calc(100% - 128px); /* 64px each side */
+      }
+    }
+
+    @media (max-width: 1050px) and (min-width: 769px) {
+      .carousel {
+        width: calc(100% - 64px); /* 32px each side */
+      }
+    }
 
     /* ---- Compact desktop (narrow or short viewport) ---- */
     @media (max-width: 1200px) and (min-width: 769px) {
@@ -319,6 +347,7 @@
       <section class="hero">
         <h1>Elyssa Dennin</h1>
         <p class="subtitle">Product Design Leader</p>
+        <p>I'm interested in how ideas become systems, how systems become products, and how products become part of people's lives.</p>
         <p>I currently work at Meta, designing new creation formats aimed at making Facebook feel more expressive, participatory, and culturally relevant. Before that, I led a ground-up <a href="https://about.fb.com/news/2025/12/making-it-easier-to-create-discover-and-share-content-on-facebook/" target="_blank" rel="noopener">redesign</a> of the end-to-end creation experience across posts, stories, and reels.</p>
         <p>Before Meta, I worked at <a href="https://www.attentive.com/" target="_blank" rel="noopener">Attentive</a>, designing the world's first text message marketing platform. As the company's sixth employee and first product design hire, I shaped the foundational product experience, later growing the design organization to over 50 people.</p>
 <p>Outside of product work, I'm designing and building <a href="https://www.instagram.com/greengagefarmhouse" target="_blank" rel="noopener">Greengage</a>, a Georgian-inspired farmhouse in Bucks County, Pennsylvania. I enjoy <a href="https://greengagefarmhouse.substack.com" target="_blank" rel="noopener">writing</a> about architecture, proportion, materials, constraints, and the decision-making behind building a new-old house.</p>
