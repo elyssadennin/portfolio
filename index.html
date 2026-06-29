@@ -73,9 +73,9 @@
     .carousel {
       position: relative;
       width: calc(100% - 256px);
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 5 / 7;
       max-height: 80vh;
-      max-width: calc(80vh * 3 / 4);
+      max-width: calc(80vh * 5 / 7);
     }
 
     .carousel-slide {
@@ -316,20 +316,39 @@
       }
 
       .layout {
+        flex-direction: column;
         height: auto;
         overflow: visible;
       }
 
       .left {
-        display: none;
+        width: 100%;
+        height: auto;
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        padding-top: 56px;
+        padding-left: 32px;
+      }
+
+      .carousel {
+        width: 80px;
+        height: 80px;
+        aspect-ratio: 1 / 1;
+        max-height: none;
+        max-width: none;
+        border-radius: 16px;
+        overflow: hidden;
       }
 
       .right {
-        padding: 64px 32px 96px;
+        padding: 32px 32px 96px;
         max-width: 100%;
         overflow: visible;
         height: auto;
+        align-items: flex-start;
       }
+
     }
   </style>
 </head>
