@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elyssa Dennin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍓</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesque:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: #EAEBBF;
+      color: #2E2F00;
+      font-family: 'Hanken Grotesque', system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background: transparent;
+      color: transparent;
+      text-shadow: 0 0 5px rgba(46, 47, 0, 0.6);
+    }
+
+    a {
+      color: rgba(46, 47, 0, 0.6);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(46, 47, 0, 0.6);
+      border-radius: 9999px;
+      transition: background 0.2s ease;
+    }
+
+    a:hover { color: rgba(46, 47, 0, 1); }
+    a:hover::after { background: rgba(46, 47, 0, 1); }
+
+    /* ---- Gate ---- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #gate {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      animation: fadeIn 0.7s ease forwards;
+    }
+
+    #gate p {
+      font-size: 0.9rem;
+      color: rgba(46, 47, 0, 0.6);
+    }
+
+    #gate input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(46, 47, 0, 0.3);
+      color: #2E2F00;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1.7;
+      outline: none;
+      padding: 2px 0;
+      text-align: center;
+      width: 200px;
+      transition: border-bottom-color 0.2s ease;
+    }
+
+    #gate input::placeholder { color: rgba(46, 47, 0, 0.3); }
+    #gate input:focus { border-bottom-color: rgba(46, 47, 0, 0.7); }
+
+    #gate .error {
+      font-size: 0.8rem;
+      color: rgba(46, 47, 0, 0.4);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    #gate .error.visible { opacity: 1; }
+
+    /* ---- Two-column layout ---- */
+    #content {
+      display: none;
+      height: 100vh;
+    }
+
+    #content.visible {
+      display: flex;
+      animation: fadeIn 0.7s ease forwards;
+    }
+
+    /* ---- Left nav ---- */
+    .work-nav {
+      width: 33.333%;
+      flex-shrink: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 72px 48px 72px 64px;
+    }
+
+    .work-nav .back {
+      font-size: 0.85rem;
+      color: rgba(46, 47, 0, 0.45);
+      margin-bottom: 48px;
+      display: inline-block;
+    }
+
+    .work-nav .back::after { display: none; }
+    .work-nav .back:hover { color: rgba(46, 47, 0, 1); }
+
+    .work-nav .nav-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(46, 47, 0, 0.4);
+      margin-bottom: 20px;
+    }
+
+    .work-nav nav {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .work-nav nav button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: rgba(46, 47, 0, 0.4);
+      text-align: left;
+      transition: color 0.2s ease;
+    }
+
+    .work-nav nav button:hover { color: rgba(46, 47, 0, 0.8); }
+    .work-nav nav button.active { color: rgba(46, 47, 0, 1); }
+
+    /* ---- Right panel ---- */
+    .work-panel {
+      flex: 1;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    /* ---- Case studies ---- */
+    .case-study {
+      position: absolute;
+      inset: 0;
+      padding: 72px 80px 72px 64px;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .case-study.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .case-study .meta {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(46, 47, 0, 0.4);
+      margin-bottom: 12px;
+    }
+
+    .case-study h2 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .case-study .description {
+      color: rgba(46, 47, 0, 0.65);
+      font-size: 0.95rem;
+      max-width: 560px;
+    }
+
+    /* ---- Mobile ---- */
+    @media (max-width: 768px) {
+      html, body { height: auto; }
+
+      #content.visible {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .work-nav {
+        width: 100%;
+        height: auto;
+        padding: 48px 24px 24px;
+      }
+
+      .work-nav nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+      }
+
+      .work-panel {
+        min-height: 60vh;
+      }
+
+      .case-study {
+        position: relative;
+        inset: auto;
+        padding: 32px 24px 64px;
+        display: none;
+      }
+
+      .case-study.active {
+        display: block;
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Password gate -->
+  <div id="gate">
+    <p>Password required</p>
+    <input type="password" id="password-input" placeholder="enter password" autocomplete="off">
+    <span class="error" id="error">Incorrect password</span>
+  </div>
+
+  <!-- Protected content -->
+  <div id="content">
+
+    <div class="work-nav">
+      <a href="index.html" class="back">← Back</a>
+      <nav id="nav-links"></nav>
+    </div>
+
+    <div class="work-panel">
+
+      <!-- Add case studies here. Each needs a unique id. -->
+      <div class="case-study" id="case-1">
+        <p class="meta">Meta · 2023–2024</p>
+        <h2>Case study title</h2>
+        <p class="description">Brief description of the project and your role.</p>
+      </div>
+
+      <div class="case-study" id="case-2">
+        <p class="meta">Attentive · 2018–2022</p>
+        <h2>Case study title</h2>
+        <p class="description">Brief description of the project and your role.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const PASSWORD = 'strawberryemoji';
+    const SESSION_KEY = 'ed_work_auth';
+
+    const gate = document.getElementById('gate');
+    const content = document.getElementById('content');
+    const input = document.getElementById('password-input');
+    const error = document.getElementById('error');
+
+    if (sessionStorage.getItem(SESSION_KEY) === 'true') unlock();
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        if (input.value === PASSWORD) {
+          sessionStorage.setItem(SESSION_KEY, 'true');
+          unlock();
+        } else {
+          error.classList.add('visible');
+          input.value = '';
+          setTimeout(() => error.classList.remove('visible'), 2000);
+        }
+      } else {
+        error.classList.remove('visible');
+      }
+    });
+
+    function unlock() {
+      gate.style.display = 'none';
+      content.classList.add('visible');
+      buildNav();
+    }
+
+    function buildNav() {
+      const studies = document.querySelectorAll('.case-study');
+      const nav = document.getElementById('nav-links');
+
+      studies.forEach((study, i) => {
+        const title = study.querySelector('h2').textContent;
+        const btn = document.createElement('button');
+        btn.textContent = title;
+        btn.addEventListener('click', () => showStudy(study.id));
+        nav.appendChild(btn);
+      });
+
+      // Show the first one by default
+      if (studies.length > 0) showStudy(studies[0].id);
+    }
+
+    function showStudy(id) {
+      document.querySelectorAll('.case-study').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('#nav-links button').forEach(b => b.classList.remove('active'));
+
+      const study = document.getElementById(id);
+      if (study) {
+        study.classList.add('active');
+        study.scrollTop = 0;
+      }
+
+      const studies = Array.from(document.querySelectorAll('.case-study'));
+      const index = studies.findIndex(s => s.id === id);
+      const btns = document.querySelectorAll('#nav-links button');
+      if (btns[index]) btns[index].classList.add('active');
+    }
+  </script>
+</body>
+</html>
